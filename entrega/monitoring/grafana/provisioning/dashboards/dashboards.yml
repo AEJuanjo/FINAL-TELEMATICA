@@ -1,0 +1,10 @@
+apiVersion: 1
+providers:
+  - name: "Telematica"
+    orgId: 1
+    folder: "Monitoreo"
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    options:
+      path: /var/lib/grafana/dashboards

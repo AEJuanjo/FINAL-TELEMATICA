@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acerca de — Final Telemática</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+    header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); border-bottom: 1px solid #1e40af44; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    header h1 { font-size: 1.4rem; color: #60a5fa; }
+    nav a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
+    nav a:hover { color: #60a5fa; }
+    .content { max-width: 700px; margin: 4rem auto; padding: 0 2rem; }
+    h2 { font-size: 2rem; color: #60a5fa; margin-bottom: 1rem; }
+    p { color: #94a3b8; line-height: 1.7; margin-bottom: 1rem; }
+    .stack { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+    .tag { background: #1e293b; border: 1px solid #334155; border-radius: 0.5rem; padding: 0.4rem 0.9rem; font-size: 0.85rem; color: #60a5fa; }
+    footer { text-align: center; padding: 1.5rem; color: #475569; font-size: 0.8rem; border-top: 1px solid #1e293b; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>📡 Final Telemática</h1>
+  <nav><a href="/">Inicio</a><a href="/about">Acerca de</a><a href="/health">Health</a></nav>
+</header>
+<div class="content">
+  <h2>Acerca del proyecto</h2>
+  <p>Proyecto final del curso de Telemática. Implementa una aplicación web con un stack completo de observabilidad desplegado en AWS usando infraestructura como código con Terraform.</p>
+  <p>Demuestra cómo instrumentar una aplicación Flask con métricas de Prometheus y visualizarlas en Grafana, todo provisionado automáticamente en una instancia EC2.</p>
+  <div class="stack">
+    <span class="tag">Python 3.12</span><span class="tag">Flask</span><span class="tag">prometheus-client</span>
+    <span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">Prometheus</span>
+    <span class="tag">Grafana</span><span class="tag">Terraform</span><span class="tag">AWS EC2</span>
+  </div>
+</div>
+<footer>© {{ year }} Final Telemática</footer>
+</body>
+</html>

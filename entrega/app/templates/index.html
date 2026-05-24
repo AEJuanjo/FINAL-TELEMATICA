@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Telemática</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+    header { background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); border-bottom: 1px solid #1e40af44; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    header h1 { font-size: 1.4rem; color: #60a5fa; letter-spacing: 0.05em; }
+    nav a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
+    nav a:hover { color: #60a5fa; }
+    .hero { text-align: center; padding: 5rem 2rem 3rem; }
+    .hero h2 { font-size: 2.8rem; font-weight: 700; background: linear-gradient(90deg, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+    .hero p { color: #94a3b8; font-size: 1.1rem; max-width: 520px; margin: 0 auto 2rem; }
+    .badge-row { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .badge { background: #1e293b; border: 1px solid #334155; border-radius: 9999px; padding: 0.35rem 1rem; font-size: 0.8rem; color: #60a5fa; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 1rem; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+    .card:hover { border-color: #3b82f6; transform: translateY(-3px); }
+    .card-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+    .links { display: flex; justify-content: center; gap: 1rem; padding-bottom: 4rem; flex-wrap: wrap; }
+    .btn { padding: 0.6rem 1.4rem; border-radius: 0.5rem; font-size: 0.9rem; text-decoration: none; transition: opacity 0.2s; }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-outline { border: 1px solid #334155; color: #94a3b8; }
+    footer { text-align: center; padding: 1.5rem; color: #475569; font-size: 0.8rem; border-top: 1px solid #1e293b; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>📡 Final Telemática</h1>
+  <nav>
+    <a href="/">Inicio</a>
+    <a href="/about">Acerca de</a>
+    <a href="/health">Health</a>
+  </nav>
+</header>
+<section class="hero">
+  <h2>Monitoreo en tiempo real</h2>
+  <p>Proyecto final de Telemática — infraestructura desplegada en AWS con observabilidad completa.</p>
+  <div class="badge-row">
+    <span class="badge">🐍 Flask</span>
+    <span class="badge">📊 Prometheus</span>
+    <span class="badge">📈 Grafana</span>
+    <span class="badge">🐳 Docker</span>
+    <span class="badge">☁️ AWS EC2</span>
+    <span class="badge">🏗️ Terraform</span>
+  </div>
+  <div class="links">
+    <a class="btn btn-primary" href="/metrics">Ver métricas</a>
+    <a class="btn btn-outline" href="/about">Acerca de</a>
+  </div>
+</section>
+<div class="cards">
+  <div class="card"><div class="card-icon">🔭</div><h3>Observabilidad</h3><p>Métricas de visitas, latencia y usuarios activos en <code>/metrics</code>.</p></div>
+  <div class="card"><div class="card-icon">📊</div><h3>Grafana</h3><p>Dashboard preconfigurado con visitas/s, latencia p95 y usuarios activos.</p></div>
+  <div class="card"><div class="card-icon">☁️</div><h3>AWS + Terraform</h3><p>Infraestructura como código. EC2 provisionada automáticamente.</p></div>
+</div>
+<footer>© {{ year }} Final Telemática</footer>
+</body>
+</html>
