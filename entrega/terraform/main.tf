@@ -13,7 +13,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-# AMI: Amazon Linux 2023 (siempre la mas reciente)
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
@@ -29,7 +28,6 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
-# Security Group: abre los puertos necesarios
 resource "aws_security_group" "telematica_sg" {
   name        = "telematica-sg"
   description = "Acceso web, Grafana, Prometheus y SSH"
@@ -78,7 +76,6 @@ resource "aws_security_group" "telematica_sg" {
   }
 }
 
-# EC2: instala Docker, clona el repo y levanta todo automaticamente
 resource "aws_instance" "app_server" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = var.instance_type
@@ -90,26 +87,20 @@ resource "aws_instance" "app_server" {
     volume_type = "gp3"
   }
 
-  user_data = <<-EOF
-    #!/bin/bash
-    exec > /var/log/user-data.log 2>&1
-
-    # 1. Instalar Docker y Git
-    dnf update -y
-    dnf install -y docker docker-compose-plugin git
-
-    systemctl enable docker
-    systemctl start docker
-
-    # 2. Clonar el repositorio
-    git clone https://github.com/AEJuanjo/FINAL-TELEMATICA.git /opt/telematica
-
-    # 3. Levantar el proyecto
-    cd /opt/telematica
-    docker compose up --build -d
-
-    echo "Despliegue completado: $(date)"
-  EOF
+  user_data = base64encode(<<-SCRIPT
+#!/bin/bash
+exec > /var/log/user-data.log 2>&1
+echo "Iniciando despliegue..."
+dnf update -y
+dnf install -y docker docker-compose-plugin git
+systemctl enable docker
+systemctl start docker
+git clone https://github.com/AEJuanjo/FINAL-TELEMATICA.git /opt/telematica
+cd /opt/telematica
+docker compose up --build -d
+echo "Despliegue completado: $(date)"
+SCRIPT
+  )
 
   tags = {
     Name = "telematica-app-server"
