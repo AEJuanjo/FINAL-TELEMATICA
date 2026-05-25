@@ -15,7 +15,7 @@ provider "aws" {
 
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["099720109477"] # Canonical
+  owners      = ["099720109477"]
 
   filter {
     name   = "name"
@@ -92,14 +92,31 @@ resource "aws_instance" "app_server" {
 #!/bin/bash
 exec > /var/log/user-data.log 2>&1
 echo "Iniciando despliegue..."
+
+# Instalar dependencias base
 apt-get update -y
-apt-get install -y docker.io docker-compose-plugin git
+apt-get install -y ca-certificates curl gnupg git
+
+# Agregar repositorio oficial de Docker
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Instalar Docker y Docker Compose plugin
+apt-get update -y
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# Iniciar Docker
 systemctl enable docker
 systemctl start docker
 while ! docker info > /dev/null 2>&1; do sleep 2; done
+
+# Clonar repo y levantar contenedores
 git clone https://github.com/AEJuanjo/FINAL-TELEMATICA.git /opt/telematica
 cd /opt/telematica
 docker compose up --build -d
+
 echo "Despliegue completado: $(date)"
 SCRIPT
 
