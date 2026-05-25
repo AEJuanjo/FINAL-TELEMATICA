@@ -79,6 +79,7 @@ resource "aws_security_group" "telematica_sg" {
 resource "aws_instance" "app_server" {
   ami                         = data.aws_ami.amazon_linux.id
   instance_type               = var.instance_type
+  key_name                    = "vockey"
   vpc_security_group_ids      = [aws_security_group.telematica_sg.id]
   associate_public_ip_address = true
 
