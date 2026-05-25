@@ -13,13 +13,13 @@ provider "aws" {
   region = var.aws_region
 }
 
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "ubuntu" {
   most_recent = true
-  owners      = ["amazon"]
+  owners      = ["099720109477"] # Canonical
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-x86_64"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
   }
 
   filter {
@@ -77,7 +77,7 @@ resource "aws_security_group" "telematica_sg" {
 }
 
 resource "aws_instance" "app_server" {
-  ami                         = data.aws_ami.amazon_linux.id
+  ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   key_name                    = "vockey"
   vpc_security_group_ids      = [aws_security_group.telematica_sg.id]
@@ -92,8 +92,8 @@ resource "aws_instance" "app_server" {
 #!/bin/bash
 exec > /var/log/user-data.log 2>&1
 echo "Iniciando despliegue..."
-dnf update -y
-dnf install -y docker docker-compose-plugin git
+apt-get update -y
+apt-get install -y docker.io docker-compose-plugin git
 systemctl enable docker
 systemctl start docker
 while ! docker info > /dev/null 2>&1; do sleep 2; done
