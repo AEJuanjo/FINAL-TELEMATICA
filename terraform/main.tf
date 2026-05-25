@@ -87,7 +87,7 @@ resource "aws_instance" "app_server" {
     volume_type = "gp3"
   }
 
-  user_data = base64encode(<<-SCRIPT
+  user_data = <<-SCRIPT
 #!/bin/bash
 exec > /var/log/user-data.log 2>&1
 echo "Iniciando despliegue..."
@@ -95,12 +95,12 @@ dnf update -y
 dnf install -y docker docker-compose-plugin git
 systemctl enable docker
 systemctl start docker
+while ! docker info > /dev/null 2>&1; do sleep 2; done
 git clone https://github.com/AEJuanjo/FINAL-TELEMATICA.git /opt/telematica
 cd /opt/telematica
 docker compose up --build -d
 echo "Despliegue completado: $(date)"
 SCRIPT
-  )
 
   tags = {
     Name = "telematica-app-server"
